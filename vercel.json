@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "http://3.108.215.193:8000/$1"
+      }
+    ]
+  }
+  
