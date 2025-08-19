@@ -1,8 +1,6 @@
 {
-    "name": "studywithai-frontend",
-    "version": "1.0.0",
     "scripts": {
-      "build": "echo \"window.CONFIG = { API_URL: '${API_URL}' };\" > config.js"
+      "build": "echo \"window.CONFIG = { API_URL: '$NEXT_PUBLIC_API_URL' };\" > config.js"
     }
   }
   
