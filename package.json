@@ -1,6 +1,17 @@
 {
-    "scripts": {
-      "build": "echo \"window.CONFIG = { API_URL: '$NEXT_PUBLIC_API_URL' };\" > config.js"
-    }
+  "name": "studywithai-frontend",
+  "version": "1.0.0",
+  "description": "AI-powered flashcards and interactive quizzes platform",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "node build.js",
+    "start": "npx serve ."
+  },
+  "keywords": ["ai", "flashcards", "quiz", "learning", "education"],
+  "author": "StudyWithAI",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
   }
-  
+}
