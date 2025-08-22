@@ -652,94 +652,48 @@
         let flashcardData = [];
         let currentFlashcardIndex = 0;
 
-        // Use API endpoint from config.js with CORS proxy for HTTP requests
-        const API_BASE_URL = (() => {
-            const configUrl = window.CONFIG ? window.CONFIG.API_URL : 'http://localhost:8000';
-            
-            // If we're on HTTPS and trying to access HTTP, use a CORS proxy
-            if (window.location.protocol === 'https:' && configUrl.startsWith('http:')) {
-                console.warn('⚠️ HTTPS to HTTP detected - using CORS proxy');
-                return `https://cors-anywhere.herokuapp.com/${configUrl}`;
-            }
-            
-            return configUrl;
-        })();
+        // Use API endpoint from config.js only
+        const API_BASE_URL = window.CONFIG ? window.CONFIG.API_URL : 'http://localhost:8000';
 
         // Check API availability on page load
         async function checkAPIConnection() {
             try {
-                // Try direct connection first
-                let apiUrl = window.CONFIG ? window.CONFIG.API_URL : 'http://localhost:8000';
-                let response = await fetch(`${apiUrl}/health`);
-                
+                const response = await fetch(`${API_BASE_URL}/health`);
                 if (response.ok) {
-                    console.log('✅ Direct API connection successful');
+                    console.log('✅ API connection successful');
                     return true;
+                } else {
+                    throw new Error('API not responding');
                 }
-                
-                // If direct fails and we're on HTTPS, try with CORS proxy
-                if (window.location.protocol === 'https:' && apiUrl.startsWith('http:')) {
-                    console.log('🔄 Trying CORS proxy...');
-                    response = await fetch(`https://cors-anywhere.herokuapp.com/${apiUrl}/health`);
-                    
-                    if (response.ok) {
-                        console.log('✅ CORS proxy connection successful');
-                        showMixedContentWarning();
-                        return true;
-                    }
-                }
-                
-                throw new Error('API not responding');
             } catch (error) {
                 console.error('❌ API connection failed:', error);
-                showConnectionError();
+                showGlobalError('API server is not running. Please start the API server first.');
                 return false;
             }
         }
 
-        // Show mixed content warning
-        function showMixedContentWarning() {
-            const warningDiv = document.createElement('div');
-            warningDiv.className = 'error-message';
-            warningDiv.style.background = 'rgba(245, 158, 11, 0.1)';
-            warningDiv.style.borderColor = 'var(--warning-color)';
-            warningDiv.style.color = 'var(--warning-color)';
-            warningDiv.style.position = 'fixed';
-            warningDiv.style.top = '20px';
-            warningDiv.style.right = '20px';
-            warningDiv.style.zIndex = '1000';
-            warningDiv.style.maxWidth = '400px';
-            warningDiv.innerHTML = `
-                <i class="fas fa-shield-alt"></i> 
-                <strong>Security Notice:</strong><br>
-                Using CORS proxy for HTTP backend. For production, please enable HTTPS on your backend server.
-                <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: inherit; cursor: pointer; font-size: 1.2em; margin-left: 10px;">&times;</button>
-            `;
-            document.body.appendChild(warningDiv);
-        }
-
-        // Show connection error with solutions
-        function showConnectionError() {
+        // Show global error message
+        function showGlobalError(message) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-message';
             errorDiv.style.position = 'fixed';
             errorDiv.style.top = '20px';
             errorDiv.style.right = '20px';
             errorDiv.style.zIndex = '1000';
-            errorDiv.style.maxWidth = '500px';
+            errorDiv.style.maxWidth = '400px';
             errorDiv.innerHTML = `
                 <i class="fas fa-exclamation-triangle"></i> 
-                <strong>Cannot Connect to API Server</strong><br>
-                <br><strong>Possible solutions:</strong>
-                <ul style="margin: 10px 0; padding-left: 20px;">
-                    <li>Ensure your backend server at <code>http://3.108.215.193:8000</code> is running</li>
-                    <li>Enable HTTPS on your backend server (recommended)</li>
-                    <li>Allow mixed content in your browser (temporary fix)</li>
-                </ul>
-                <button onclick="checkAPIConnection(); this.parentElement.remove()" style="background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; margin-top: 10px;">Retry Connection</button>
+                <strong>Connection Error:</strong><br>
+                ${message}
                 <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: inherit; cursor: pointer; font-size: 1.2em; margin-left: 10px;">&times;</button>
             `;
             document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                if (errorDiv.parentElement) {
+                    errorDiv.remove();
+                }
+            }, 10000);
         }
 
         // Tab switching
