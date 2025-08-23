@@ -1,13 +1,13 @@
 {
   "functions": {
-    "app.js": {
-      "runtime": "@vercel/static"
+    "app/**/*.js": {
+      "runtime": "nodejs18.x"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [

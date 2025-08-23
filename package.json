@@ -1,17 +1,14 @@
 {
   "name": "studywithai-frontend",
   "version": "1.0.0",
-  "description": "AI-powered flashcards and interactive quizzes platform",
+  "description": "StudyWithAI - Interactive Learning Platform Frontend",
   "main": "index.html",
   "scripts": {
-    "dev": "npx serve .",
-    "build": "node build.js",
-    "start": "npx serve ."
+    "start": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
   },
-  "keywords": ["ai", "flashcards", "quiz", "learning", "education"],
+  "keywords": ["ai", "study", "flashcards", "quiz", "learning"],
   "author": "StudyWithAI",
-  "license": "MIT",
-  "devDependencies": {
-    "serve": "^14.2.1"
-  }
+  "license": "MIT"
 }
