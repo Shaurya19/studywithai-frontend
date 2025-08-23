@@ -1,14 +1,13 @@
 {
   "name": "studywithai-frontend",
   "version": "1.0.0",
-  "description": "StudyWithAI - Interactive Learning Platform Frontend",
-  "main": "index.html",
+  "description": "StudyWithAI Frontend - Interactive Learning Platform",
   "scripts": {
-    "start": "vercel dev",
-    "build": "echo 'Static site - no build needed'",
-    "deploy": "vercel --prod"
+    "build": "node build.js",
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
   },
-  "keywords": ["ai", "study", "flashcards", "quiz", "learning"],
-  "author": "StudyWithAI",
-  "license": "MIT"
+  "devDependencies": {
+    "fs": "^0.0.1-security"
+  }
 }

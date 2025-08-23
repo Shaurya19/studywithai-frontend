@@ -6,8 +6,6 @@
     <title>StudyWithAI - Interactive Learning Platform</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Load environment configuration first -->
-    <script src="/api/config"></script>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -641,7 +639,6 @@
         </div>
     </div>
 
-    <script src="config.js"></script>
     <script>
         // Global variables
         let currentTab = 'flashcards';
@@ -654,8 +651,8 @@
         let flashcardData = [];
         let currentFlashcardIndex = 0;
 
-        // Use API endpoint from config.js only
-        const API_BASE_URL = window.CONFIG ? window.CONFIG.API_URL : 'http://localhost:8000';
+        // API URL configuration
+        const API_BASE_URL = window.API_URL;
 
         // Check API availability on page load
         async function checkAPIConnection() {
