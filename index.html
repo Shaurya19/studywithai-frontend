@@ -653,6 +653,7 @@
 
         // API URL configuration
         const API_BASE_URL = window.API_URL;
+        const API_SECRET_KEY = window.API_SECRET_KEY;
 
         // Check API availability on page load
         async function checkAPIConnection() {
@@ -755,8 +756,13 @@
                     formData.append('files', file);
                 }
                 
+                const headers = {
+                    'X-API-Key': API_SECRET_KEY
+                };
+
                 const response = await fetch(`${API_BASE_URL}/generate-flashcards`, {
                     method: 'POST',
+                    headers: headers,
                     body: formData
                 });
                 
@@ -814,8 +820,13 @@
                     formData.append('files', file);
                 }
                 
+                const headers = {
+                    'X-API-Key': API_SECRET_KEY
+                };
+
                 const response = await fetch(`${API_BASE_URL}/generate-quiz`, {
                     method: 'POST',
+                    headers: headers,
                     body: formData
                 });
                 
